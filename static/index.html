@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Posting Form</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Postal code Form</h1>
+        <form action="/add" method="POST" class="add-form">
+            <div class="form-group">
+                <label for="job-title">Area</label>
+                <input type="text" id="area" name="area" required>
+            </div>
+            <div class="form-group">
+                <label for="company-name">Region</label>
+                <input type="text" id="region" name="Region" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Postal code</label>
+                <input type="text" id="postal-code" name="postal-code" required>
+            </div>
+            <div class="form-group">
+                <label for="job-type">Settlement</label>
+                <select id="job-type" name="settlement" required>
+                    <option value="064d8d8b-accf-428e-b65e-76bd37adea93">Rural</option>
+                    <option value="ac7f7fcf-8d97-4b62-9953-a49aee7589a6">Urban</option>
+                    <option value="5a6ddafa-cc25-4b78-ae9d-1cd4acc6a094">Municipality</option>
+                    <option value="863d0c83-a4b2-4677-9876-29f33523a0c0">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="salary">District</label>
+                <input type="text" id="district" name="district" required>
+            </div>
+            <button type="submit" class="submit-btn">Add</button>
+        </form>
+    </div>
+</body>
+</html>
