@@ -1,4 +1,4 @@
-<h1class="text-3xl font-bold underline">eyatu</h1>
+<h1 class="text-3xl font-bold underline">eyatu</h1>
 
 <style lang="postcss">
     :global(html) {
