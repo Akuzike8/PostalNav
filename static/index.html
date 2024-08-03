@@ -3,40 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PostalNav Form</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>API Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
 </head>
 <body>
-    <div class="container">
-        <h1>Postal code Form</h1>
-        <form action="/add" method="POST" class="add-form">
-            <div class="form-group">
-                <label for="job-title">Area</label>
-                <input type="text" id="area" name="area" required>
+    <header class="border-b max-w-6xl mx-auto">
+        <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+          <a class="text-xl text-blue-500 font-bold" href="#">PostalNav API documentation</a>
+        </nav>
+    </header>
+    <main class="max-w-6xl mx-auto ">
+        <section class="px-7 my-7">
+            <h2 class="font-bold text-2xl mb-3 text-gray-700">PostalNav REST API</h2>
+            <p class="text-gray-500">Welcome to the API documentation for our service an API for finding postal codes and details of areas typically provides endpoints that allow users to search for postal codes</p>
+        </section>
+
+        <section class="px-7 my-7">
+            <h2 class="font-bold text-2xl mb-3 text-gray-700">Endpoints</h2>
+
+            <div class="endpoint border-t mb-[20px]">
+                <h3 class="text-blue-400 text-lg my-[20px]">API Documentation</h3>
+                <div class="flex flex-column-2 justify-between">
+                    <div>
+                        <p class="text-gray-500"><strong>URL:</strong> <code class="prettyprint">/</code></p>
+                        <p class="text-gray-500"><strong>Method:</strong> GET</p>
+                        <p class="text-gray-500"><strong>Description:</strong> Returns the home page.</p>
+                    </div>
+                    <div class="flex-end flex flex-column-2 h-10">
+                        <span class="bg-black text-white px-3 py-2 m-0">GET</span>
+                        <span class="bg-blue-500 px-3 py-2 text-white m-0 w-[100px]">/</span>
+                    </div>
+                </div>
+                       
             </div>
-            <div class="form-group">
-                <label for="company-name">Region</label>
-                <input type="text" id="region" name="Region" required>
+
+            <div class="endpoint border-y">
+                <h3 class="text-blue-400 text-lg my-[20px]">Get Postal Code</h3>
+                <div class="flex flex-column-2 justify-between">
+                    <div>
+                        <p class="text-gray-500"><strong>URL:</strong> <code class="prettyprint">/get</code></p>
+                        <p class="text-gray-500"><strong>Method:</strong> GET</p>
+                        <p class="text-gray-500"><strong>Description:</strong> Retrieves postal information.</p>
+                    </div>
+                    <div class="flex-end flex flex-column-2 h-10">
+                        <span class="bg-black text-white px-3 py-2 m-0">GET</span>
+                        <span class="bg-blue-500 px-3 py-2 text-white m-0 w-[100px]">/get</span>
+                    </div>
+                </div>
+                
+                <pre>
+                    <code class="prettyprint json block bg-white border rounded-md p-3">
+                        {"Id":"fbfae471-044c-4c15-82ff-7f9c06a1f5b9","Area":"Chemusa","Postal_code":"312209","District":"BLANTYRE","Region":"Southern Region","Settlement":"Urban"}
+                    </code>
+                </pre>
+
             </div>
-            <div class="form-group">
-                <label for="location">Postal code</label>
-                <input type="text" id="postal-code" name="postal-code" required>
+
+            <div class="endpoint border-t">
+                <h3 class="text-blue-400 text-lg my-[20px]">Search</h3>
+                <div class="flex flex-column-2 justify-between">
+                    <div>
+                        <p><strong>URL:</strong> <code class="prettyprint">/get/{slug}</code></p>
+                        <p><strong>Method:</strong> GET</p>
+                        <p><strong>Description:</strong> Retrieves postal information for a given slug.</p>
+                        <p><strong>Parameters:</strong></p>
+                        <ul>
+                            <li><code class="prettyprint">slug</code> (string): The unique identifier for the postal information.</li>
+                        </ul>
+                    </div>
+                    <div class="flex-end flex flex-column-2 h-10">
+                        <span class="bg-black text-white px-3 py-2 m-0">GET</span>
+                        <span class="bg-blue-500 px-3 py-2 text-white m-0 w-[100px]">/get/{slug}</span>
+                    </div>
+                </div>
+                <pre>
+                    <code class="prettyprint json block bg-white border rounded-md p-3">
+                        {"Id":"fbfae471-044c-4c15-82ff-7f9c06a1f5b9","Area":"Chemusa","Postal_code":"312209","District":"BLANTYRE","Region":"Southern Region","Settlement":"Urban"}
+                    </code>
+                </pre>
             </div>
-            <div class="form-group">
-                <label for="job-type">Settlement</label>
-                <select id="job-type" name="settlement" required>
-                    <option value="064d8d8b-accf-428e-b65e-76bd37adea93">Rural</option>
-                    <option value="ac7f7fcf-8d97-4b62-9953-a49aee7589a6">Urban</option>
-                    <option value="5a6ddafa-cc25-4b78-ae9d-1cd4acc6a094">Municipality</option>
-                    <option value="863d0c83-a4b2-4677-9876-29f33523a0c0">Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="salary">District</label>
-                <input type="text" id="district" name="district" required>
-            </div>
-            <button type="submit" class="submit-btn">Add</button>
-        </form>
-    </div>
+        </section>
+    </main>
+    
+    <footer class="border-t max-w-6xl mx-auto py-3 my-3">
+        <p class="text-center">&copy; 2024 PostalNav</p>
+    </footer>
+    
+    <script defer>
+        var all_codes = document.getElementsByClassName('json').length;
+        
+        for(var i=0; i<all_codes; i++){
+            var code_json = document.getElementsByClassName('json')[i].innerHTML;
+            document.getElementsByClassName('json')[i].innerHTML = JSON.stringify(JSON.parse(code_json),null,'\t');
+        }
+    </script>
 </body>
 </html>
