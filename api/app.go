@@ -17,7 +17,7 @@ func main() {
 
 	// Serve static files
 	fs := http.FileServer(http.Dir("../static"))
-	r.Handle("/static/*", http.StripPrefix("/static/", fs))
+	r.Handle("/doc/*", http.StripPrefix("/doc/", fs))
 
 	r.Get("/", handles.Home)
 

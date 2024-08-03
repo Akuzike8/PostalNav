@@ -8,7 +8,7 @@ import (
 )
 
 func Home(w http.ResponseWriter, r *http.Request){
-	page, err := os.ReadFile("../static/index.html")
+	page, err := os.ReadFile("../doc/index.html")
 
 	if err != nil {
 		response := models.Response {Message: "failed to load page"}
