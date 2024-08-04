@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
@@ -47,20 +48,45 @@ func GetPostal(w http.ResponseWriter, r *http.Request){
     db := DB.Connect()
 
     postal := []models.PostalCode{}
-    fields := `
-        postal_codes.id AS id,
+
+    sql := `SELECT postal_codes.id AS id,
         area,  
         code AS Postal_code, 
         district.name AS district,
         region.name AS region, 
-        location.type AS settlement
-    `
-    result := db.Select(fields).
-                 Joins("INNER JOIN location ON postal_codes.location_type_id = location.id").
-                 Joins("INNER JOIN district ON postal_codes.district_id = district.id").
-                 Joins("INNER JOIN region ON district.region_id = region.id ").Find(&postal)
+        location.type AS settlement 
+        FROM postal_codes
+        INNER JOIN location ON postal_codes.location_type_id = location.id
+        INNER JOIN district ON postal_codes.district_id = district.id
+        INNER JOIN region ON district.region_id = region.id `
 
-    res, err := json.Marshal(postal)
+    q := r.URL.Query()
+
+    var page int
+    page , _ = strconv.Atoi(sanitize.Numeric(q.Get("page")));  
+    perPage, _ := strconv.Atoi(sanitize.Numeric(q.Get("limit")))
+    
+    if perPage == 0{
+        perPage, _ = strconv.Atoi("15")
+    }  
+
+    if page !=0 {
+        sql = fmt.Sprintf("%s LIMIT %d OFFSET %d",sql,perPage,(page - 1)*perPage)
+    }
+
+    var total int64
+
+    db.Raw(sql).Count(&total)
+
+    result := db.Raw(sql).Scan(&postal)
+
+    pagenated := models.PagenatedResponse{
+        Data: postal,
+        Total: total,
+        Page: page,
+    }
+
+    res, err := json.Marshal(pagenated)
 
     if err != nil {
         log.Fatal(err)
@@ -98,9 +124,33 @@ func GetPostalBySlug(w http.ResponseWriter, r *http.Request){
 
     sql = fmt.Sprintf("%s WHERE area LIKE '%%%s%%' OR district.name LIKE '%%%s%%' OR region.name LIKE '%%%s%%' OR code LIKE '%%%s%%' OR location.type LIKE '%%%s%%'",sql,slug,slug,slug,slug,slug)
 
+    q := r.URL.Query()
+
+    var page int
+    page , _ = strconv.Atoi(sanitize.Numeric(q.Get("page")));
+    perPage, _ := strconv.Atoi(sanitize.Numeric(q.Get("limit")))
+    
+    if perPage == 0{
+        perPage, _ = strconv.Atoi("15")
+    } 
+
+    if  page !=0 {
+        sql = fmt.Sprintf("%s LIMIT %d OFFSET %d",sql,perPage,(page - 1)*perPage)
+    }
+
+    var total int64
+
+    db.Raw(sql).Count(&total)
+
     result := db.Raw(sql).Scan(&postal)
 
-    res, err := json.Marshal(postal)
+    pagenated := models.PagenatedResponse{
+        Data: postal,
+        Total: total,
+        Page: page,
+    }
+
+    res, err := json.Marshal(pagenated)
 
     if err != nil {
         log.Fatal(err)

@@ -14,3 +14,9 @@ type PostalCode struct {
     Region string `json:""`
     Settlement string `json:""`
 }
+
+type PagenatedResponse struct {
+    Data []PostalCode `json:""`
+    Total int64 `json:""`
+    Page int `json:""`
+}

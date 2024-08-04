@@ -23,7 +23,7 @@ func main() {
 
 	r.Get("/get", handles.GetPostal)
 
-	r.Get("/get/{slug:[a-z-0-9-]+}", handles.GetPostalBySlug)
+	r.Get("/search/{slug:[a-z-0-9-]+}", handles.GetPostalBySlug)
 
 	error := godotenv.Load(".env")
 
