@@ -3,8 +3,9 @@
     import { onDestroy } from 'svelte';
 
     export let data;
+    console.log(data)
 
-    const searchPlaces = data.places.map((place: any) => ({
+    const searchPlaces = data.places.Data.map((place: any) => ({
         ...place,
         searchTerms: `${place.Area} ${place.Postal_code} ${place.District} ${place.Settlement} ${place.Region}`
     }))
@@ -36,7 +37,7 @@
         </div>
     </form>
     
-    <div class="relative overflow-x-auto flex ">
+    <div class="relative overflow-x-auto">
         <table class="rounded-md shadow-md w-50 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-500 mx-auto">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-100 dark:text-gray-900">
                 <tr>
@@ -76,11 +77,60 @@
                             {place.Settlement}
                         </td>
                     </tr>
-                {/each}
-                
+                {/each}       
             </tbody>
         </table>
-        
+        <div class="flex justify-center my-6">
+            <ul class="list-style-none mb-6 flex">
+                <li>
+                    {#if data.places.Page < 2}
+                        <a
+                        class="pointer-events-none relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface/50 transition duration-300 dark:text-neutral-400"
+                        href="#!"
+                        >Previous</a
+                        >
+                    {:else}
+                        <a
+                        class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface/50 transition duration-300 dark:text-neutral-400"
+                        href="#!"
+                        >Previous</a
+                        >
+                    {/if}
+                </li>
+                <li>
+                  <a
+                    class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-gray-700 text-surface transition duration-300 hover:bg-neutral-100 "
+                    href="#!"
+                    >1</a
+                  >
+                </li>
+                <li aria-current="page">
+                  <a
+                    class="relative block rounded bg-[#0f172a] px-3 py-1.5 text-[#6590d5] text-sm font-medium transition duration-300 focus:outline-none"
+                    href="#!"
+                    >2
+                    <span
+                      class="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]"
+                      >(current)</span
+                    >
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-gray-700 text-surface transition duration-300 hover:bg-neutral-100"
+                    href="#!"
+                    >3</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:focus:text-primary-500 dark:active:bg-neutral-700 dark:active:text-primary-500"
+                    href="#!"
+                    >Next</a
+                  >
+                </li>
+              </ul>
+        </div>
     </div>
 </main>
 

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math"
 	"net/http"
 	"strconv"
 
@@ -65,7 +66,11 @@ func GetPostal(w http.ResponseWriter, r *http.Request){
     var page int
     page , _ = strconv.Atoi(sanitize.Numeric(q.Get("page")));  
     perPage, _ := strconv.Atoi(sanitize.Numeric(q.Get("limit")))
-    
+
+    var total int64
+
+    db.Raw(sql).Count(&total)
+
     if perPage == 0{
         perPage, _ = strconv.Atoi("15")
     }  
@@ -74,9 +79,12 @@ func GetPostal(w http.ResponseWriter, r *http.Request){
         sql = fmt.Sprintf("%s LIMIT %d OFFSET %d",sql,perPage,(page - 1)*perPage)
     }
 
-    var total int64
+    var x float64 = float64(perPage)
+    var z float64 = float64(total)
 
-    db.Raw(sql).Count(&total)
+    val := z / x
+    
+    lastPage := math.Ceil(val)
 
     result := db.Raw(sql).Scan(&postal)
 
@@ -84,6 +92,7 @@ func GetPostal(w http.ResponseWriter, r *http.Request){
         Data: postal,
         Total: total,
         Page: page,
+        LastPage: lastPage,
     }
 
     res, err := json.Marshal(pagenated)
@@ -129,7 +138,11 @@ func GetPostalBySlug(w http.ResponseWriter, r *http.Request){
     var page int
     page , _ = strconv.Atoi(sanitize.Numeric(q.Get("page")));
     perPage, _ := strconv.Atoi(sanitize.Numeric(q.Get("limit")))
-    
+
+    var total int64
+
+    db.Raw(sql).Count(&total)
+
     if perPage == 0{
         perPage, _ = strconv.Atoi("15")
     } 
@@ -138,9 +151,12 @@ func GetPostalBySlug(w http.ResponseWriter, r *http.Request){
         sql = fmt.Sprintf("%s LIMIT %d OFFSET %d",sql,perPage,(page - 1)*perPage)
     }
 
-    var total int64
+    var x float64 = float64(perPage)
+    var z float64 = float64(total)
 
-    db.Raw(sql).Count(&total)
+    val := z / x
+    
+    lastPage := math.Ceil(val)
 
     result := db.Raw(sql).Scan(&postal)
 
@@ -148,6 +164,7 @@ func GetPostalBySlug(w http.ResponseWriter, r *http.Request){
         Data: postal,
         Total: total,
         Page: page,
+        LastPage: lastPage,
     }
 
     res, err := json.Marshal(pagenated)

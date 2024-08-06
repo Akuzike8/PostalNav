@@ -19,4 +19,5 @@ type PagenatedResponse struct {
     Data []PostalCode `json:""`
     Total int64 `json:""`
     Page int `json:""`
+    LastPage float64 `json:""`
 }
