@@ -51,11 +51,11 @@ func GetPostal(w http.ResponseWriter, r *http.Request){
     postal := []models.PostalCode{}
 
     sql := `SELECT postal_codes.id AS id,
-        area,  
-        code AS Postal_code, 
+        area,
+        code AS Postal_code,
         district.name AS district,
-        region.name AS region, 
-        location.type AS settlement 
+        region.name AS region,
+        location.type AS settlement
         FROM postal_codes
         INNER JOIN location ON postal_codes.location_type_id = location.id
         INNER JOIN district ON postal_codes.district_id = district.id
@@ -64,7 +64,7 @@ func GetPostal(w http.ResponseWriter, r *http.Request){
     q := r.URL.Query()
 
     var page int
-    page , _ = strconv.Atoi(sanitize.Numeric(q.Get("page")));  
+    page , _ = strconv.Atoi(sanitize.Numeric(q.Get("page")));
     perPage, _ := strconv.Atoi(sanitize.Numeric(q.Get("limit")))
 
     var total int64
@@ -73,7 +73,7 @@ func GetPostal(w http.ResponseWriter, r *http.Request){
 
     if perPage == 0{
         perPage, _ = strconv.Atoi("15")
-    }  
+    }
 
     if page !=0 {
         sql = fmt.Sprintf("%s LIMIT %d OFFSET %d",sql,perPage,(page - 1)*perPage)
@@ -83,7 +83,7 @@ func GetPostal(w http.ResponseWriter, r *http.Request){
     var z float64 = float64(total)
 
     val := z / x
-    
+
     lastPage := math.Ceil(val)
 
     result := db.Raw(sql).Scan(&postal)
@@ -105,7 +105,7 @@ func GetPostal(w http.ResponseWriter, r *http.Request){
         w.Header().Set("Content-Type", "application/json")
         w.WriteHeader(http.StatusAccepted)
         w.Write(res)
-        
+
     }else{
         w.Header().Set("Content-Type", "application/json")
         w.WriteHeader(http.StatusBadRequest)
@@ -117,15 +117,15 @@ func GetPostalBySlug(w http.ResponseWriter, r *http.Request){
     db := DB.Connect()
 
     slug := sanitize.AlphaNumeric(sanitize.XSS(chi.URLParam(r,"slug")),true)
-    
+
     postal := []models.PostalCode{}
 
     sql := `SELECT postal_codes.id AS id,
-        area,  
-        code AS Postal_code, 
+        area,
+        code AS Postal_code,
         district.name AS district,
-        region.name AS region, 
-        location.type AS settlement 
+        region.name AS region,
+        location.type AS settlement
         FROM postal_codes
         INNER JOIN location ON postal_codes.location_type_id = location.id
         INNER JOIN district ON postal_codes.district_id = district.id
@@ -145,7 +145,7 @@ func GetPostalBySlug(w http.ResponseWriter, r *http.Request){
 
     if perPage == 0{
         perPage, _ = strconv.Atoi("15")
-    } 
+    }
 
     if  page !=0 {
         sql = fmt.Sprintf("%s LIMIT %d OFFSET %d",sql,perPage,(page - 1)*perPage)
@@ -155,7 +155,7 @@ func GetPostalBySlug(w http.ResponseWriter, r *http.Request){
     var z float64 = float64(total)
 
     val := z / x
-    
+
     lastPage := math.Ceil(val)
 
     result := db.Raw(sql).Scan(&postal)
@@ -177,7 +177,7 @@ func GetPostalBySlug(w http.ResponseWriter, r *http.Request){
         w.Header().Set("Content-Type", "application/json")
         w.WriteHeader(http.StatusAccepted)
         w.Write(res)
-        
+
     }else{
         w.Header().Set("Content-Type", "application/json")
         w.WriteHeader(http.StatusBadRequest)

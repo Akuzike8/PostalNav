@@ -1,0 +1,4 @@
+
+DROP FUNCTION IF EXISTS nanoid_simple;
+DROP FUNCTION IF EXISTS nanoid_custom;
+DROP FUNCTION IF EXISTS nanoid;
