@@ -9,12 +9,3 @@ CREATE TABLE IF NOT EXISTS `audit` (
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
-CREATE TRIGGER IF NOT EXISTS `before_insert_audit` BEFORE INSERT ON `audit`
-    FOR EACH ROW
-    BEGIN
-        IF NEW.audit_no IS NULL OR NEW.audit_no = '' THEN
-            SET NEW.audit_no = nanoid();
-        END IF;
-    END;
-

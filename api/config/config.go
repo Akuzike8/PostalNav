@@ -13,14 +13,6 @@ type Config struct {
 	DBHOST                   string
 	DBPORT                   string
 	DBNAME                   string
-	D                        string
-	E                        string
-	M                        string
-	ENETICKET_EMAIL          string
-	ENETICKET_EMAIL_PASSWORD string
-	REDIS_HOST               string
-	REDIS_PORT               string
-	REDIS_PASSWORD           string
 }
 
 func LoadConfig() *Config {

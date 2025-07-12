@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS postalcodes (
+CREATE TABLE IF NOT EXISTS postcodes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     country_code VARCHAR(10) NOT NULL,
     postcode VARCHAR(10) NOT NULL,

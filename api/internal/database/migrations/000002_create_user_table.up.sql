@@ -13,13 +13,3 @@ CREATE TABLE IF NOT EXISTS `user` (
 );
 
 
-CREATE TRIGGER IF NOT EXISTS `before_insert_user` BEFORE INSERT ON `user`
-    FOR EACH ROW
-    BEGIN
-        IF NEW.user_no IS NULL OR NEW.user_no = '' THEN
-            SET NEW.user_no = nanoid();
-            INSERT INTO `audit` (`action`, `table_name`, `record_no`)
-            VALUES ('create', 'user', NEW.user_no);
-        END IF;
-    END;
-

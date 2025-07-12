@@ -12,6 +12,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+	"api/internal/services/handlers"
 )
 
 func main() {
@@ -35,6 +36,12 @@ func main() {
     // Authentication routes (public)
 	r.Route("/auth", func(r chi.Router) {
 
+	})
+
+	// Postal code routes (public)
+	r.Route("/postal", func(r chi.Router) {
+		r.Get("/get", handlers.GetPostal)
+		r.Get("/search/{slug:[a-z-0-9-]+}", handlers.SearchPostalBySlug)
 	})
 
 	server := &http.Server{
